@@ -1,7 +1,7 @@
 ## docker-wine-openjdk-gradle-kotlin-native
 
 This container includes gradle, openjdk and wine in a single image and provides some useful things
-to compile windows libraries and executables of Kotlin/Native projects.
+to compile windows and linux libraries and executables of Kotlin/Native projects.
 
 This docker is built automatically here: <https://hub.docker.com/r/soywiz/kotlin-native-win/>
 
