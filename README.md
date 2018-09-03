@@ -29,3 +29,10 @@ but be careful since that might screw things (untested).
 is a small script that you to run a headless wine inside the container to test cli windows application
 you can place it along the gradlew_win script to run your generated programs without having to install
 wine in your host.
+
+## `./gradlew_wine`
+
+If you have WINE installed, and the oraclejdk or openjdk installed, you can use `gradlew_wine`. It will run faster.
+
+You can also place symbolik links from your `.wine` prefix `.gradle`, `.m2`, `.konan` to your user's host folder
+to be able to reuse artifacts.
