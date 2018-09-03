@@ -40,8 +40,8 @@ org.gradle.daemon=false
 ```
 
 ## 
-[`gradlew-win`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/gradlew-win)
+[`gradlew_win`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/gradlew_win)
 
-[`gradlew-win`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/gradlew-win) 
-is a small script that you can copy to your path to invoke `gradlew.bat` in the current folder inside the
-container.
+[`gradlew_win`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/gradlew_win) 
+is a small script that you can copy to your project where the `gradlew.bat` file is, and it will launch
+gradle for windows in the container.

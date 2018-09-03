@@ -1,0 +1,9 @@
+#!/bin/bash
+HOME=`echo ~`
+docker run -it \
+	"-v$PWD:/work" \
+	"-v$HOME/.gradle-win:/root/.wine/drive_c/users/root/.gradle" \
+	"-v$HOME/.konan-win:/root/.wine/drive_c/users/root/.konan" \
+	soywiz/kotlin-native-win \
+	winecmd gradlew.bat $*
+
