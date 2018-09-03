@@ -1,7 +1,0 @@
-[HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment]
-"JAVA_HOME"="c:\\dev\\java"
-"PATH"="C:\\windows\\system32;C:\\windows;C:\\windows\\system32\\wbem;C:\\dev\\gradle\\bin;C:\\dev\\java\\bin"
-
-[HKEY_CURRENT_USER\Environment]
-"JAVA_HOME"="c:\\dev\\java"
-"PATH"="C:\\windows\\system32;C:\\windows;C:\\windows\\system32\\wbem;C:\\dev\\gradle\\bin;C:\\dev\\java\\bin"
