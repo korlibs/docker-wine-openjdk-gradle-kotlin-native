@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.konan").version("0.8.2")
+    id("org.jetbrains.kotlin.konan").version("0.9-rc1-3632")
 }
         
 konanArtifacts { program("HelloWorld") }

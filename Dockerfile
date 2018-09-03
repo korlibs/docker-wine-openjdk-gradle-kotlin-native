@@ -2,10 +2,14 @@
 FROM ubuntu:18.10
 MAINTAINER Carlos Ballesteros Velasco <soywiz@gmail.com>
 
+ARG GRADLE_VERSION=4.9
+ARG KOTLIN_NATIVE_VERSION=0.9-rc1-3632
+
 VOLUME ["/work"]
 WORKDIR /work
 ENV WINEPREFIX=/root/.wine
 ENV WINEDEBUG=-all
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install wine and tools, and initialize wine
 RUN dpkg --add-architecture i386 && \
@@ -18,10 +22,10 @@ RUN dpkg --add-architecture i386 && \
 # Install gradle
 RUN mkdir -p /root/.wine/drive_c/dev/ && \
 	cd /root/.wine/drive_c/dev/ && \
-	wget --quiet https://services.gradle.org/distributions/gradle-4.7-bin.zip && \
-	unzip gradle-4.7-bin.zip && \
-	rm -f gradle-4.7-bin.zip && \
-	mv gradle-4.7 gradle
+	wget --quiet https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-all.zip && \
+	unzip gradle-$GRADLE_VERSION-all.zip && \
+	rm -f gradle-$GRADLE_VERSION-all.zip && \
+	mv gradle-$GRADLE_VERSION gradle
 
 # Install openjdk 
 RUN mkdir -p /root/.wine/drive_c/dev/ && \
@@ -51,24 +55,16 @@ RUN cd /root && \
 	wineserver -w && \
 	sleep 5
 
-# Add gradle-win tool
-RUN cd /root && \
-	echo '#!/bin/bash' > /usr/local/bin/gradle-win && \
-	echo 'wine cmd /c gradle $*' >> /usr/local/bin/gradle-win && \
-	chmod +x /usr/local/bin/gradle-win
+# Add gradle-win and winecmd tools
+RUN cd /usr/local/bin && \
+	echo "#!/bin/bash\nwine cmd /c gradle \$*" > gradle-win && \
+	echo "#!/bin/bash\nwine cmd /c \$*" > winecmd && \
+	chmod +x gradle-win winecmd
 
-# Add winecmd tool
-RUN cd /root && \
-	echo '#!/bin/bash' > /usr/local/bin/winecmd && \
-	echo 'wine cmd /c $*' >> /usr/local/bin/winecmd && \
-	chmod +x /usr/local/bin/winecmd
-
-# Download Kotlin-native stuff
-RUN cd /root/ && \
-	mkdir -p /root/src/main/kotlin && \
-	echo 'plugins { id("org.jetbrains.kotlin.konan").version("0.8.2") } konanArtifacts { program("HelloWorld") }' > /root/build.gradle.kts && \
-	echo 'rootProject.name = "HelloWorld"' > /root/settings.gradle.kts && \
-	echo 'fun main(args: Array<String>) { println("Hello, Native World!") }' >> /root/src/main/kotlin/hello.kt && \
-	gradle-win compileKonan && \
+# Compile a hello world project with Kotlin-native, so it downloads gradle, and all the kotlin/Native dependencies
+COPY hello-world /root/hello-world
+RUN cd /root/hello-world && \
+	winecmd gradlew.bat compileKonan && \
+	rm -rf /root/hello-world && \
 	gradle-win --stop && \
 	sleep 3
