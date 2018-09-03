@@ -1,0 +1,2 @@
+JAVA_HOME=c:\\dev\\java wine cmd /c c:\\dev\\gradle\\bin\\gradle.bat
+
