@@ -23,6 +23,12 @@ gradle for windows in the container.
 You can try to change the `SUFFIX=-win` to `SUFFIX=` to your host folders to reuse things,
 but be careful since that might screw things (untested).
 
+## [`gradlew_linux`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/gradlew_linux)
+
+[`gradlew_linux`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/gradlew_linux) 
+is a small script that you can copy to your project where the `gradlew` file is, and it will launch
+gradle for linux in the container.
+
 ## [`./wine`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/wine)
 
 [`./wine`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/wine) 
@@ -40,8 +46,11 @@ to be able to reuse artifacts.
 Delete or remoname `$HOME/.wine/drive_c/users/$USERNAME/.gradle`m `.m2` and `.konan` folders before doing
 the symbolic linking in the case they exists already.
 
+~
 ```
-ln -s $HOME/.gradle $HOME/.wine/drive_c/users/$USERNAME/.gradle
+#ln -s $HOME/.gradle $HOME/.wine/drive_c/users/$USERNAME/.gradle # doesn't look like a good idea because there is information about the daemons
 ln -s $HOME/.m2 $HOME/.wine/drive_c/users/$USERNAME/.m2
 ln -s $HOME/.konan $HOME/.wine/drive_c/users/$USERNAME/.konan
 ```
+~
+

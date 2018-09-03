@@ -16,6 +16,9 @@ RUN dpkg --add-architecture i386 && \
 	wineserver -w && \
 	sleep 5
 
+# Install openjdk to compile for linux too
+RUN apt-get install -y openjdk-8-jdk
+
 # Install gradle
 RUN mkdir -p /root/.wine/drive_c/dev/ && \
 	cd /root/.wine/drive_c/dev/ && \
@@ -75,13 +78,16 @@ RUN cd /root && \
 	echo 'org.gradle.daemon=false' > /root/.wine/drive_c/users/root/.gradle/gradle.properties
 
 # Volume with all the gradle stuff
-VOLUME ["/root/.wine/drive_c/users/root/.gradle"]
-
 # Volume with all the konan stuff
-VOLUME ["/root/.wine/drive_c/users/root/.konan"]
-
 # Volume with all the maven stuff (useful for publishing to maven local)
+VOLUME ["/root/.wine/drive_c/users/root/.gradle"]
+VOLUME ["/root/.wine/drive_c/users/root/.konan"]
 VOLUME ["/root/.wine/drive_c/users/root/.m2"]
+
+# Volumes for linux
+VOLUME ["/root/.gradle"]
+VOLUME ["/root/.konan"]
+VOLUME ["/root/.m2"]
 
 # Volume that will held the work, usually mounted with "-v$PWD:/work"
 VOLUME ["/work"]
