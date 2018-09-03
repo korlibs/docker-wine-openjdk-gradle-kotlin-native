@@ -36,3 +36,12 @@ If you have WINE installed, and the oraclejdk or openjdk installed, you can use 
 
 You can also place symbolik links from your `.wine` prefix `.gradle`, `.m2`, `.konan` to your user's host folder
 to be able to reuse artifacts.
+
+Delete or remoname `$HOME/.wine/drive_c/users/$USERNAME/.gradle`m `.m2` and `.konan` folders before doing
+the symbolic linking in the case they exists already.
+
+```
+ln -s $HOME/.gradle $HOME/.wine/drive_c/users/$USERNAME/.gradle
+ln -s $HOME/.m2 $HOME/.wine/drive_c/users/$USERNAME/.m2
+ln -s $HOME/.konan $HOME/.wine/drive_c/users/$USERNAME/.konan
+```
