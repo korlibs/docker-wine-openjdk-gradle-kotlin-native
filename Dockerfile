@@ -25,4 +25,6 @@ ADD registry.reg /root/
 RUN wine regedit /root/registry.reg
 
 # Download Kotlin-native stuff
-RUN echo 'plugins { id "org.jetbrains.kotlin.konan" version "0.8.2" }' > /root/build.gradle && JAVA_HOME=c:\\dev\\java wine cmd /c c:\\dev\\gradle\\bin\\gradle.bat
+RUN cd /root/ && \
+	echo 'plugins { id "org.jetbrains.kotlin.konan" version "0.8.2" }' > /root/build.gradle && \
+	JAVA_HOME=c:\\dev\\java wine cmd /c c:\\dev\\gradle\\bin\\gradle.bat
