@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install wine and tools, and initialize wine
 RUN dpkg --add-architecture i386 && \
 	apt-get update && \
-	apt-get install -y wine wine32 wine64 unzip wget curl nano && \
+	apt-get install -y wine wine32 wine64 unzip wget curl nano libtinfo-dev libtinfo5 && \
 	wine wineboot --init && \
 	wineserver -w && \
 	sleep 5
@@ -80,8 +80,6 @@ RUN cd /root && \
 	mkdir -p /root/.m2 && \
 	echo 'org.gradle.daemon=false' > /root/.wine/drive_c/users/root/.gradle/gradle.properties && \
 	echo 'org.gradle.daemon=false' > /root/.gradle/gradle.properties
-
-RUN apt install -y libtinfo-dev libtinfo5
 
 # Volume with all the gradle stuff
 # Volume with all the konan stuff
