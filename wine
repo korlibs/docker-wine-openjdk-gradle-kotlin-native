@@ -1,7 +1,2 @@
 #!/bin/bash
-docker run -it \
-        "-v$PWD:/work" \
-        "-v$HOME/.gradle-win:/root/.wine/drive_c/users/root/.gradle" \
-        "-v$HOME/.konan-win:/root/.wine/drive_c/users/root/.konan" \
-        soywiz/kotlin-native-win \
-        wine $*
+docker run -it "-v$PWD:/work" soywiz/kotlin-native-win wine $*
