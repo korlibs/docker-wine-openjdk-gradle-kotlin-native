@@ -81,6 +81,8 @@ RUN cd /root && \
 	echo 'org.gradle.daemon=false' > /root/.wine/drive_c/users/root/.gradle/gradle.properties && \
 	echo 'org.gradle.daemon=false' > /root/.gradle/gradle.properties
 
+RUN apt install -y libtinfo-dev libtinfo5
+
 # Volume with all the gradle stuff
 # Volume with all the konan stuff
 # Volume with all the maven stuff (useful for publishing to maven local)
