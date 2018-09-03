@@ -3,10 +3,7 @@ FROM ubuntu:18.10
 MAINTAINER Carlos Ballesteros Velasco <soywiz@gmail.com>
 
 ARG GRADLE_VERSION=4.9
-ARG KOTLIN_NATIVE_VERSION=0.9-rc1-3632
 
-VOLUME ["/work"]
-WORKDIR /work
 ENV WINEPREFIX=/root/.wine
 ENV WINEDEBUG=-all
 ENV DEBIAN_FRONTEND=noninteractive
@@ -62,9 +59,27 @@ RUN cd /usr/local/bin && \
 	chmod +x gradle-win winecmd
 
 # Compile a hello world project with Kotlin-native, so it downloads gradle, and all the kotlin/Native dependencies
-COPY hello-world /root/hello-world
-RUN cd /root/hello-world && \
-	winecmd gradlew.bat compileKonan && \
-	rm -rf /root/hello-world && \
-	gradle-win --stop && \
-	sleep 3
+# Should not e required since the .gradle folder is a volume?
+#COPY hello-world /root/hello-world
+#RUN cd /root/hello-world && \
+#	winecmd gradlew.bat compileKonan && \
+#	rm -rf /root/hello-world && \
+#	gradle-win --stop && \
+#	sleep 3
+
+# Do not use gradle daemon
+RUN cd /root && \
+	mkdir -p /root/.wine/drive_c/users/root/.gradle && \
+	mkdir -p /root/.wine/drive_c/users/root/.konan && \
+	echo 'org.gradle.daemon=false' > /root/.wine/drive_c/users/root/.gradle/gradle.properties
+
+# Volume with all the gradle stuff
+VOLUME ["/root/.wine/drive_c/users/root/.gradle"]
+
+# Volume with all the konan stuff
+VOLUME ["/root/.wine/drive_c/users/root/.konan"]
+
+# Volume that will held the work, usually mounted with "-v$PWD:/work"
+VOLUME ["/work"]
+
+WORKDIR /work

@@ -1,4 +1,10 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-docker run "-v$DIR/hello-world:/work" soywiz/kotlin-native-win:0.8.2 winecmd gradlew.bat compileKonan
+HOME=`echo ~`
+docker run -it \
+	"-v$DIR/hello-world:/work" \
+	"-v$HOME/.gradle-win:/root/.wine/drive_c/users/root/.gradle" \
+	"-v$HOME/.konan-win:/root/.wine/drive_c/users/root/.konan" \
+	soywiz/kotlin-native-win \
+	winecmd gradlew.bat compileKonan
 
