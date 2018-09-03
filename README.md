@@ -20,12 +20,12 @@ popd
 is a small script that you can copy to your project where the `gradlew.bat` file is, and it will launch
 gradle for windows in the container.
 
-You can try to change `-v$HOME/.gradle-win` and `-v$HOME/.konan-win` to your host folders to reuse things,
+You can try to change the `SUFFIX=-win` to `SUFFIX=` to your host folders to reuse things,
 but be careful since that might screw things (untested).
 
-## [`wine`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/wine)
+## [`./wine`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/wine)
 
-[`wine`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/wine) 
+[`./wine`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/wine) 
 is a small script that you to run a headless wine inside the container to test cli windows application
 you can place it along the gradlew_win script to run your generated programs without having to install
 wine in your host.

@@ -67,10 +67,11 @@ RUN cd /usr/local/bin && \
 #	gradle-win --stop && \
 #	sleep 3
 
-# Do not use gradle daemon
+# Create .gradle, .konan and .m2, and instructions to not use the gradle daemon
 RUN cd /root && \
 	mkdir -p /root/.wine/drive_c/users/root/.gradle && \
 	mkdir -p /root/.wine/drive_c/users/root/.konan && \
+	mkdir -p /root/.wine/drive_c/users/root/.m2 && \
 	echo 'org.gradle.daemon=false' > /root/.wine/drive_c/users/root/.gradle/gradle.properties
 
 # Volume with all the gradle stuff
@@ -78,6 +79,9 @@ VOLUME ["/root/.wine/drive_c/users/root/.gradle"]
 
 # Volume with all the konan stuff
 VOLUME ["/root/.wine/drive_c/users/root/.konan"]
+
+# Volume with all the maven stuff (useful for publishing to maven local)
+VOLUME ["/root/.wine/drive_c/users/root/.m2"]
 
 # Volume that will held the work, usually mounted with "-v$PWD:/work"
 VOLUME ["/work"]

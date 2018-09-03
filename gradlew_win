@@ -10,6 +10,7 @@ SUFFIX=-win
 docker run -it \
 	"-v$PWD:/work" \
 	"-v$HOME/.gradle$SUFFIX:/root/.wine/drive_c/users/root/.gradle" \
+	"-v$HOME/.m2$SUFFIX:/root/.wine/drive_c/users/root/.m2" \
 	"-v$HOME/.konan$SUFFIX:/root/.wine/drive_c/users/root/.konan" \
 	soywiz/kotlin-native-win \
 	winecmd gradlew.bat $*
