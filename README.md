@@ -39,9 +39,15 @@ If you want to disable the pointless gradle daemon, add the following line to th
 org.gradle.daemon=false
 ```
 
-## 
-[`gradlew_win`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/gradlew_win)
+## [`gradlew_win`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/gradlew_win)
 
 [`gradlew_win`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/gradlew_win) 
 is a small script that you can copy to your project where the `gradlew.bat` file is, and it will launch
 gradle for windows in the container.
+
+## [`wine`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/wine)
+
+[`wine`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/wine) 
+is a small script that you to run a headless wine inside the container to test cli windows application
+you can place it along the gradlew_win script to run your generated programs without having to install
+wine in your host.
