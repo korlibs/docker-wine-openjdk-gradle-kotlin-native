@@ -28,12 +28,19 @@ RUN mkdir -p /root/.wine/drive_c/dev/ && \
 	mv gradle-$GRADLE_VERSION gradle
 
 # Install openjdk 
+#RUN mkdir -p /root/.wine/drive_c/dev/ && \
+#	cd /root/.wine/drive_c/dev/ && \
+#	wget --quiet https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.181-1/java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64.zip && \
+#	unzip java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64.zip && \
+#	rm -f java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64.zip && \
+#	mv java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64 java
+
 RUN mkdir -p /root/.wine/drive_c/dev/ && \
 	cd /root/.wine/drive_c/dev/ && \
-	wget --quiet https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.181-1/java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64.zip && \
-	unzip java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64.zip && \
-	rm -f java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64.zip && \
-	mv java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64 java
+	wget --quiet https://download.java.net/java/GA/jdk10/10.0.2/19aef61b38124481863b1413dce1855f/13/openjdk-10.0.2_windows-x64_bin.tar.gz && \
+	tar -xzf openjdk-10.0.2_windows-x64_bin.tar.gz && \
+	rm -f openjdk-10.0.2_windows-x64_bin.tar.gz && \
+	mv jdk-10.0.2 java
 
 # Install oraclejdk (after accepting the binary license) - http://www.oracle.com/technetwork/java/javase/terms/license/index.html
 #ADD jdk1.8.0_181.zip /root/
