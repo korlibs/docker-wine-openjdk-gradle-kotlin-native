@@ -40,7 +40,8 @@ RUN mkdir -p /root/.wine/drive_c/dev/ && \
 	wget --quiet https://download.java.net/java/GA/jdk10/10.0.2/19aef61b38124481863b1413dce1855f/13/openjdk-10.0.2_windows-x64_bin.tar.gz && \
 	tar -xzf openjdk-10.0.2_windows-x64_bin.tar.gz && \
 	rm -f openjdk-10.0.2_windows-x64_bin.tar.gz && \
-	mv jdk-10.0.2 java
+	mv jdk-10.0.2 java && \
+	rm java/lib/src.zip
 
 # Install oraclejdk (after accepting the binary license) - http://www.oracle.com/technetwork/java/javase/terms/license/index.html
 #ADD jdk1.8.0_181.zip /root/
