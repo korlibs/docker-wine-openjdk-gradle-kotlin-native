@@ -2,7 +2,7 @@
 FROM ubuntu:18.10
 MAINTAINER Carlos Ballesteros Velasco <soywiz@gmail.com>
 
-ARG GRADLE_VERSION=4.9
+ARG GRADLE_VERSION=5.1.1
 
 ENV WINEPREFIX=/root/.wine
 ENV WINEDEBUG=-all
@@ -17,7 +17,7 @@ RUN dpkg --add-architecture i386 && \
 	sleep 5
 
 # Install openjdk to compile for linux too
-RUN apt-get install -y openjdk-8-jdk
+RUN apt-get install -y openjdk-11-jdk
 
 # Install gradle
 RUN mkdir -p /root/.wine/drive_c/dev/ && \
@@ -89,19 +89,25 @@ RUN cd /root && \
 	echo 'org.gradle.daemon=false' > /root/.wine/drive_c/users/root/.gradle/gradle.properties && \
 	echo 'org.gradle.daemon=false' > /root/.gradle/gradle.properties
 
+RUN cp -rf /root/. /root.bak
+
 # Volume with all the gradle stuff
 # Volume with all the konan stuff
 # Volume with all the maven stuff (useful for publishing to maven local)
-VOLUME ["/root/.wine/drive_c/users/root/.gradle"]
-VOLUME ["/root/.wine/drive_c/users/root/.konan"]
-VOLUME ["/root/.wine/drive_c/users/root/.m2"]
+#VOLUME ["/root/.wine/drive_c/users/root/.gradle"]
+#VOLUME ["/root/.wine/drive_c/users/root/.konan"]
+#VOLUME ["/root/.wine/drive_c/users/root/.m2"]
 
 # Volumes for linux
-VOLUME ["/root/.gradle"]
-VOLUME ["/root/.konan"]
-VOLUME ["/root/.m2"]
+#VOLUME ["/root/.gradle"]
+#VOLUME ["/root/.konan"]
+#VOLUME ["/root/.m2"]
+
+VOLUME ["/root"]
 
 # Volume that will held the work, usually mounted with "-v$PWD:/work"
 VOLUME ["/work"]
 
 WORKDIR /work
+
+RUN echo "#!/bin/bash\nif [ ! -d /root/.wine ]; then\ncp -r /root.bak/. /root\nfi" > /root.bak/prepare.sh && chmod +x /root.bak/prepare.sh
