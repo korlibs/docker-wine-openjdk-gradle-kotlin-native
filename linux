@@ -1,8 +1,9 @@
 #!/bin/bash
+export DOCKER_USER_HOME=/home/user
 HOME=`echo ~` docker run --rm -it \
 	-v "$PWD:/work" \
-	-v "gradlew_gradle_linux:/home/user/.gradle" \
-	-v "gradlew_konan_linux:/home/user/.konan" \
-	-v "gradlew_m2:/home/user/.m2" \
+	-v "gradlew_gradle_linux:$DOCKER_USER_HOME/.gradle" \
+	-v "gradlew_konan_linux:$DOCKER_USER_HOME/.konan" \
+	-v "gradlew_m2:$DOCKER_USER_HOME/.m2" \
 	soywiz/kotlin-native-win:java11 \
 	$*

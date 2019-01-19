@@ -9,11 +9,9 @@ ENV USER_HOME_LINUX=/home/user
 ENV WINEPREFIX=$USER_HOME_LINUX/.wine
 ENV WINEDEBUG=-all
 
-RUN umask 000
 RUN chmod 0777 -R /usr/local/bin
 RUN useradd -ms /bin/bash user
 USER user
-RUN umask 000
 
 RUN	wine wineboot --init && wineserver -w && sleep 5
 
@@ -72,9 +70,3 @@ VOLUME ["$USER_HOME_LINUX/.m2"]
 VOLUME ["/work"]
 
 WORKDIR /work
-
-ADD --chown=user libffi-3.2.1-mingw-w64-x86-64.zip /libffi-3.2.1-mingw-w64-x86-64.zip
-ADD --chown=user fixes.sh /usr/local/bin/fixes.sh
-RUN chmod +x /usr/local/bin/fixes.sh
-
-ENTRYPOINT ["/usr/local/bin/fixes.sh"]
