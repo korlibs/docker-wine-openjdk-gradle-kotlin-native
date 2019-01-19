@@ -1,0 +1,13 @@
+#!/bin/bash
+declare -a arr=("gradlew_gradle_linux" "gradlew_gradle_win")
+
+for i in "${arr[@]}"
+do
+
+echo $i
+HOME=`echo ~` docker run \
+	-v "$HOME/.gradle:/work" \
+	-v "$i:/root/.gradle" \
+	soywiz/kotlin-native-win \
+	cp /work/gradle.properties /root/.gradle/gradle.properties
+done

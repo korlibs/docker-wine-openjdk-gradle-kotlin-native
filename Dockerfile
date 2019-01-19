@@ -47,19 +47,15 @@ RUN cd /root && \
 	mkdir -p /root/.wine/drive_c/users/root/.m2 && \
 	mkdir -p /root/.gradle && \
 	mkdir -p /root/.konan && \
-	mkdir -p /root/.m2 && \
-	mkdir -p /root/.gradle_properties && echo 'org.gradle.daemon=false' > /root/.gradle_properties/gradle.properties echo ln -s /root/.gradle_properties/gradle.properties /root/.gradle/gradle.properties && \
-	mkdir -p /root/.wine/drive_c/users/root/.gradle_properties && echo 'org.gradle.daemon=false' > /root/.wine/drive_c/users/root/.gradle_properties/gradle.properties echo ln -s /root/.gradle_properties/gradle.properties /root/.wine/drive_c/users/root/.gradle/gradle.properties
+	mkdir -p /root/.m2
 
 # Volumes for wine
 VOLUME ["/root/.wine/drive_c/users/root/.gradle"]
-VOLUME ["/root/.wine/drive_c/users/root/.gradle_properties"]
 VOLUME ["/root/.wine/drive_c/users/root/.konan"]
 VOLUME ["/root/.wine/drive_c/users/root/.m2"]
 
 # Volumes for linux
 VOLUME ["/root/.gradle"]
-VOLUME ["/root/.gradle_properties"]
 VOLUME ["/root/.konan"]
 VOLUME ["/root/.m2"]
 
