@@ -20,12 +20,12 @@ RUN dpkg --add-architecture i386 && \
 RUN apt-get install -y openjdk-11-jdk
 
 # Install gradle
-RUN mkdir -p /root/.wine/drive_c/dev/ && \
-	cd /root/.wine/drive_c/dev/ && \
-	wget --quiet https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-all.zip && \
-	unzip gradle-$GRADLE_VERSION-all.zip && \
-	rm -f gradle-$GRADLE_VERSION-all.zip && \
-	mv gradle-$GRADLE_VERSION gradle
+#RUN mkdir -p /root/.wine/drive_c/dev/ && \
+#	cd /root/.wine/drive_c/dev/ && \
+#	wget --quiet https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip && \
+#	unzip gradle-$GRADLE_VERSION-bin.zip && \
+#	rm -f gradle-$GRADLE_VERSION-bin.zip && \
+#	mv gradle-$GRADLE_VERSION gradle
 
 # Install openjdk 
 #RUN mkdir -p /root/.wine/drive_c/dev/ && \
@@ -37,10 +37,10 @@ RUN mkdir -p /root/.wine/drive_c/dev/ && \
 
 RUN mkdir -p /root/.wine/drive_c/dev/ && \
 	cd /root/.wine/drive_c/dev/ && \
-	wget --quiet https://download.java.net/java/GA/jdk10/10.0.2/19aef61b38124481863b1413dce1855f/13/openjdk-10.0.2_windows-x64_bin.tar.gz && \
-	tar -xzf openjdk-10.0.2_windows-x64_bin.tar.gz && \
-	rm -f openjdk-10.0.2_windows-x64_bin.tar.gz && \
-	mv jdk-10.0.2 java && \
+	wget --quiet https://github.com/ojdkbuild/ojdkbuild/releases/download/11.0.1-1/java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.zip && \
+	unzip java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.zip && \
+	rm -f java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.zip && \
+	mv java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64 java && \
 	rm java/lib/src.zip
 
 # Install oraclejdk (after accepting the binary license) - http://www.oracle.com/technetwork/java/javase/terms/license/index.html
