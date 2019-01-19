@@ -1,20 +1,54 @@
-buildscript {
-	repositories {
-		maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
-		maven { url "https://dl.bintray.com/kotlin/kotlin-eap/" }
+plugins {
+	id 'kotlin-multiplatform' version '1.3.20-eap-100'
+}
+
+kotlin {
+	targets {
+		fromPreset(presets.jvm, 'jvm')
+		fromPreset(presets.macosX64, 'macosX64')
+		fromPreset(presets.mingwX64, 'mingwX64')
+		fromPreset(presets.linuxX64, 'linuxX64')
+
+		configure([macosX64, mingwX64, linuxX64]) {
+			compilations.main.outputKinds("EXECUTABLE")
+		}
+	}
+	sourceSets {
+		nativeCommonMain
+		nativeCommonTest
+
+		configure([macosX64Main, mingwX64Main, linuxX64Main]) {
+			dependsOn nativeCommonMain
+		}
 	}
 }
 
-plugins {
-	id "org.jetbrains.kotlin.konan" version "0.9-rc1-3632"
-}
-
 repositories {
-	maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
-	maven { url "https://dl.bintray.com/kotlin/kotlin-eap/" }
+	mavenLocal()
+	mavenCentral()
+	maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
 }
 
-konanArtifacts {
-	program("HelloWorld")
+dependencies {
+	commonMainImplementation "org.jetbrains.kotlin:kotlin-stdlib-common"
+	commonTestImplementation "org.jetbrains.kotlin:kotlin-test-annotations-common"
+	commonTestImplementation "org.jetbrains.kotlin:kotlin-test-common"
+
+	jvmMainImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+	jvmTestImplementation "org.jetbrains.kotlin:kotlin-test"
+	jvmTestImplementation "org.jetbrains.kotlin:kotlin-test-junit"
 }
 
+ext.mainClassName = "HelloKt"
+
+task fatJar(type: Jar) {
+	baseName = "${project.name}-all"
+	manifest { attributes "Main-Class": mainClassName }
+	from { kotlin.targets.jvm.compilations.main.runtimeDependencyFiles.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jvmJar
+}
+
+task runJvm(type: JavaExec) {
+	classpath = kotlin.targets.jvm.compilations.test.runtimeDependencyFiles
+	main = mainClassName
+}

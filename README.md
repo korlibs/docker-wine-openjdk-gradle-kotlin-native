@@ -8,15 +8,20 @@ This docker is built automatically here: <https://hub.docker.com/r/soywiz/kotlin
 ## Build and run HelloWorld
 
 ```bash
+#!/bin/bash
 pushd hello-world
 
-echo Building and running windows...
-./gradlew_win compileKonan
-./wine build/konan/bin/mingw_x64/HelloWorld.exe
+echo Building java, macos, windows, linux...
+./gradlew fatJar
+./gradlew linkTestDebugExecutableMacosX64
+./gradlew_win linkTestDebugExecutableMingwX64
+./gradlew_linux linkTestDebugExecutableLinuxX64
 
-echo Building and running linux...
-./gradlew_linux compileKonan
-./linux build/konan/bin/linux_x64/HelloWorld.kexe
+echo Running macos, windows, linux...
+java -jar build/libs/HelloWorld-all.jar
+./build/bin/macosX64/main/debug/executable/HelloWorld.kexe
+./win build/bin/mingwX64/main/debug/executable/HelloWorld.exe
+./linux build/bin/linuxX64/main/debug/executable/HelloWorld.kexe
 
 popd
 ```
@@ -36,12 +41,18 @@ but be careful since that might screw things (untested).
 is a small script that you can copy to your project where the `gradlew` file is, and it will launch
 gradle for linux in the container.
 
-## [`./wine`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/wine)
+## [`./win`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/win)
 
-[`./wine`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/wine) 
+[`./win`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/win) 
 is a small script that you to run a headless wine inside the container to test cli windows application
 you can place it along the gradlew_win script to run your generated programs without having to install
 wine in your host.
+
+## [`./linux`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/linux)
+
+[`./linux`](https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native/blob/master/linux) 
+is a small script that you to run a linux command you can place it along the gradlew_linux script to run
+your generated linux programs.
 
 ## `./gradlew_wine`
 
@@ -53,11 +64,7 @@ to be able to reuse artifacts.
 Delete or remoname `$HOME/.wine/drive_c/users/$USERNAME/.gradle`m `.m2` and `.konan` folders before doing
 the symbolic linking in the case they exists already.
 
-~
-```
-#ln -s $HOME/.gradle $HOME/.wine/drive_c/users/$USERNAME/.gradle # doesn't look like a good idea because there is information about the daemons
-ln -s $HOME/.m2 $HOME/.wine/drive_c/users/$USERNAME/.m2
-ln -s $HOME/.konan $HOME/.wine/drive_c/users/$USERNAME/.konan
-```
-~
+## `gradlew_copy_gradle_properties`
 
+If you want to copy your system's gradle.properties to be used inside linux and windows gradlew, you can call this bash script.
+It helps for example if you have properties for publishing/deploying.

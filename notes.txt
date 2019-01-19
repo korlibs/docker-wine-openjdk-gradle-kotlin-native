@@ -1,7 +1,0 @@
-JAVA_HOME=c:\\dev\\java wine cmd /c c:\\dev\\gradle\\bin\\gradle.bat
-
-docker run -it ##### bash
-WINEDEBUG=-all wine cmd /c gradlew.bat
-
-docker run "-v$PWD:/work" -it c7be12f27dc9 bash
-
