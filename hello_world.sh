@@ -3,7 +3,7 @@ pushd hello-world
 
 echo Building and running windows...
 ./gradlew_win compileKonan
-./wine build/konan/bin/mingw_x64/HelloWorld.exe
+win build/konan/bin/mingw_x64/HelloWorld.exe
 
 echo Building and running linux...
 ./gradlew_linux compileKonan
