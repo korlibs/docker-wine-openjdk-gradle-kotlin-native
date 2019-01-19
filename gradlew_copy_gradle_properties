@@ -7,4 +7,5 @@ do
 echo $i
 #HOME=`echo ~` docker run -v "$HOME/.gradle:/work" -v "$i:/root/.gradle" soywiz/kotlin-native-win /bin/bash -c "cp /work/gradle.properties /root/.gradle/gradle.properties && echo org.gradle.daemon=false >> /root/.gradle/gradle.properties"
 HOME=`echo ~` docker run -v "$HOME/.gradle:/work" -v "$i:/root/.gradle" soywiz/kotlin-native-win /bin/bash -c "echo org.gradle.daemon=false > /root/.gradle/gradle.properties"
+HOME=`echo ~` docker run -v "$HOME/.gradle:/work" -v "$i:/root/.gradle" soywiz/kotlin-native-win ls /root/.gradle/gradle.properties
 done

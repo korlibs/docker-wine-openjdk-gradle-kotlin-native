@@ -63,3 +63,9 @@ VOLUME ["/root/.m2"]
 VOLUME ["/work"]
 
 WORKDIR /work
+
+ADD libffi-3.2.1-mingw-w64-x86-64.zip /libffi-3.2.1-mingw-w64-x86-64.zip
+ADD fixes.sh /fixes.sh
+RUN chmod +x /fixes.sh
+
+ENTRYPOINT ["/fixes.sh"]
