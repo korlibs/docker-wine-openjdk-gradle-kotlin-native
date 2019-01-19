@@ -20,12 +20,12 @@ RUN dpkg --add-architecture i386 && \
 RUN apt-get install -y openjdk-11-jdk
 
 # Install gradle
-RUN mkdir -p /root/.wine/drive_c/dev/ && \
-	cd /root/.wine/drive_c/dev/ && \
-	wget --quiet https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip && \
-	unzip gradle-$GRADLE_VERSION-bin.zip && \
-	rm -f gradle-$GRADLE_VERSION-bin.zip && \
-	mv gradle-$GRADLE_VERSION gradle
+#RUN mkdir -p /root/.wine/drive_c/dev/ && \
+#	cd /root/.wine/drive_c/dev/ && \
+#	wget --quiet https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip && \
+#	unzip gradle-$GRADLE_VERSION-bin.zip && \
+#	rm -f gradle-$GRADLE_VERSION-bin.zip && \
+#	mv gradle-$GRADLE_VERSION gradle
 
 # Install openjdk 
 #RUN mkdir -p /root/.wine/drive_c/dev/ && \
@@ -89,7 +89,9 @@ RUN cd /root && \
 	echo 'org.gradle.daemon=false' > /root/.wine/drive_c/users/root/.gradle/gradle.properties && \
 	echo 'org.gradle.daemon=false' > /root/.gradle/gradle.properties
 
-RUN cp -rf /root/. /root.bak
+RUN echo "#!/bin/bash\nif [ ! -d /root/.wine ]; then\ncp -r /root.bak/. /root\nfi" > /root/prepare.sh && chmod +x /root/prepare.sh
+
+RUN mv /root /root.bak && mkdir -p /root
 
 # Volume with all the gradle stuff
 # Volume with all the konan stuff
@@ -110,4 +112,3 @@ VOLUME ["/work"]
 
 WORKDIR /work
 
-RUN echo "#!/bin/bash\nif [ ! -d /root/.wine ]; then\ncp -r /root.bak/. /root\nfi" > /root.bak/prepare.sh && chmod +x /root.bak/prepare.sh
