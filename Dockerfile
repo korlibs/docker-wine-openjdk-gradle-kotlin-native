@@ -20,12 +20,12 @@ RUN dpkg --add-architecture i386 && \
 RUN apt-get install -y openjdk-11-jdk
 
 # Install gradle
-#RUN mkdir -p /root/.wine/drive_c/dev/ && \
-#	cd /root/.wine/drive_c/dev/ && \
-#	wget --quiet https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip && \
-#	unzip gradle-$GRADLE_VERSION-bin.zip && \
-#	rm -f gradle-$GRADLE_VERSION-bin.zip && \
-#	mv gradle-$GRADLE_VERSION gradle
+RUN mkdir -p /root/.wine/drive_c/dev/ && \
+	cd /root/.wine/drive_c/dev/ && \
+	wget --quiet https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip && \
+	unzip gradle-$GRADLE_VERSION-bin.zip && \
+	rm -f gradle-$GRADLE_VERSION-bin.zip && \
+	mv gradle-$GRADLE_VERSION gradle
 
 # Install openjdk 
 #RUN mkdir -p /root/.wine/drive_c/dev/ && \
