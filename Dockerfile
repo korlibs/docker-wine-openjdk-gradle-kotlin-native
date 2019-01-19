@@ -2,8 +2,7 @@
 FROM ubuntu:18.10
 MAINTAINER Carlos Ballesteros Velasco <soywiz@gmail.com>
 
-ARG GRADLE_VERSION=5.1.1
-
+# Required environments
 ENV WINEPREFIX=/root/.wine
 ENV WINEDEBUG=-all
 ENV DEBIAN_FRONTEND=noninteractive
@@ -19,22 +18,6 @@ RUN dpkg --add-architecture i386 && \
 # Install openjdk to compile for linux too
 RUN apt-get install -y openjdk-11-jdk
 
-# Install gradle
-#RUN mkdir -p /root/.wine/drive_c/dev/ && \
-#	cd /root/.wine/drive_c/dev/ && \
-#	wget --quiet https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip && \
-#	unzip gradle-$GRADLE_VERSION-bin.zip && \
-#	rm -f gradle-$GRADLE_VERSION-bin.zip && \
-#	mv gradle-$GRADLE_VERSION gradle
-
-# Install openjdk 
-#RUN mkdir -p /root/.wine/drive_c/dev/ && \
-#	cd /root/.wine/drive_c/dev/ && \
-#	wget --quiet https://github.com/ojdkbuild/ojdkbuild/releases/download/1.8.0.181-1/java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64.zip && \
-#	unzip java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64.zip && \
-#	rm -f java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64.zip && \
-#	mv java-1.8.0-openjdk-1.8.0.181-1.b13.ojdkbuild.windows.x86_64 java
-
 RUN mkdir -p /root/.wine/drive_c/dev/ && \
 	cd /root/.wine/drive_c/dev/ && \
 	wget --quiet https://github.com/ojdkbuild/ojdkbuild/releases/download/11.0.1-1/java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.zip && \
@@ -42,18 +25,6 @@ RUN mkdir -p /root/.wine/drive_c/dev/ && \
 	rm -f java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.zip && \
 	mv java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64 java && \
 	rm java/lib/src.zip
-
-# Install oraclejdk (after accepting the binary license) - http://www.oracle.com/technetwork/java/javase/terms/license/index.html
-#ADD jdk1.8.0_181.zip /root/
-#RUN mkdir -p /root/.wine/drive_c/dev/ && \
-#	cd /root/.wine/drive_c/dev/ && \
-#	unzip /root/jdk1.8.0_181.zip && \
-#	mv jdk1.8.0_181 java
-
-#ADD registry.reg /root/
-#RUN wine regedit /root/registry.reg
-
-#wine reg query HKEY_CURRENT_USER\\Environment
 
 # Set JAVA_HOME and PATH environment variables with gradle and jav, and wait wineserver for 5 seconds to flush files
 RUN cd /root && \
@@ -69,15 +40,6 @@ RUN cd /usr/local/bin && \
 	echo "#!/bin/bash\nwine cmd /c \$*" > winecmd && \
 	chmod +x gradle-win winecmd
 
-# Compile a hello world project with Kotlin-native, so it downloads gradle, and all the kotlin/Native dependencies
-# Should not e required since the .gradle folder is a volume?
-#COPY hello-world /root/hello-world
-#RUN cd /root/hello-world && \
-#	winecmd gradlew.bat compileKonan && \
-#	rm -rf /root/hello-world && \
-#	gradle-win --stop && \
-#	sleep 3
-
 # Create .gradle, .konan and .m2, and instructions to not use the gradle daemon
 RUN cd /root && \
 	mkdir -p /root/.wine/drive_c/users/root/.gradle && \
@@ -86,29 +48,22 @@ RUN cd /root && \
 	mkdir -p /root/.gradle && \
 	mkdir -p /root/.konan && \
 	mkdir -p /root/.m2 && \
-	echo 'org.gradle.daemon=false' > /root/.wine/drive_c/users/root/.gradle/gradle.properties && \
-	echo 'org.gradle.daemon=false' > /root/.gradle/gradle.properties
+	mkdir -p /root/.gradle_properties && echo 'org.gradle.daemon=false' > /root/.gradle_properties/gradle.properties echo ln -s /root/.gradle_properties/gradle.properties /root/.gradle/gradle.properties && \
+	mkdir -p /root/.wine/drive_c/users/root/.gradle_properties && echo 'org.gradle.daemon=false' > /root/.wine/drive_c/users/root/.gradle_properties/gradle.properties echo ln -s /root/.gradle_properties/gradle.properties /root/.wine/drive_c/users/root/.gradle/gradle.properties
 
-RUN echo "#!/bin/bash\nif [ ! -d /root/.wine ]; then\ncp -r /root.bak/. /root\nfi" > /root/prepare.sh && chmod +x /root/prepare.sh
-
-RUN mv /root /root.bak && mkdir -p /root
-
-# Volume with all the gradle stuff
-# Volume with all the konan stuff
-# Volume with all the maven stuff (useful for publishing to maven local)
-#VOLUME ["/root/.wine/drive_c/users/root/.gradle"]
-#VOLUME ["/root/.wine/drive_c/users/root/.konan"]
-#VOLUME ["/root/.wine/drive_c/users/root/.m2"]
+# Volumes for wine
+VOLUME ["/root/.wine/drive_c/users/root/.gradle"]
+VOLUME ["/root/.wine/drive_c/users/root/.gradle_properties"]
+VOLUME ["/root/.wine/drive_c/users/root/.konan"]
+VOLUME ["/root/.wine/drive_c/users/root/.m2"]
 
 # Volumes for linux
-#VOLUME ["/root/.gradle"]
-#VOLUME ["/root/.konan"]
-#VOLUME ["/root/.m2"]
-
-VOLUME ["/root"]
+VOLUME ["/root/.gradle"]
+VOLUME ["/root/.gradle_properties"]
+VOLUME ["/root/.konan"]
+VOLUME ["/root/.m2"]
 
 # Volume that will held the work, usually mounted with "-v$PWD:/work"
 VOLUME ["/work"]
 
 WORKDIR /work
-
