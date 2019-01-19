@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-export CMD=$1
-export VOLUME=$2
+export VOLUME=$1
+export CMD=$2
 export FILE=$3
 
-if [ "$CMD" == "" ] || [ "$VOLUME" == "" ] || [ "$FILE" == "" ]; then
-    echo "Missing argument/s: $0 [ls|rm|get|put] volume file"
+if [[ "$VOLUME" == "" ]] || [[ "$CMD" == "" ]] || [[ "$FILE" == "" ]]; then
+    echo "Missing argument/s: $0 volume [ls|rm|get|put] file"
     exit
 fi
 
