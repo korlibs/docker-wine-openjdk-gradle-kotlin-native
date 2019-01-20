@@ -1,0 +1,13 @@
+#!/bin/bash
+export DOCKER_USER_HOME=/home/user/.wine/drive_c/users/user
+
+export USER_HOME_LINUX=/home/user
+export JAVA_HOME_WIN=$USER_HOME_LINUX/.wine/drive_c/dev/java
+
+docker run --rm -it \
+	-v "$PWD:/work" \
+	-v "gradlew_gradle_win:$DOCKER_USER_HOME/.gradle" \
+	-v "gradlew_konan_win:$DOCKER_USER_HOME/.konan" \
+	-v "gradlew_m2:$DOCKER_USER_HOME/.m2" \
+	soywiz/kotlin-native-win:java11 \
+	cp $JAVA_HOME_WIN/jre/lib/ext/zipfs.jar /work/zipfs.jar

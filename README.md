@@ -68,3 +68,4 @@ the symbolic linking in the case they exists already.
 
 If you want to copy your system's gradle.properties to be used inside linux and windows gradlew, you can call this bash script.
 It helps for example if you have properties for publishing/deploying.
+
