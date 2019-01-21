@@ -3,5 +3,6 @@
 /*.iml
 /*.ipr
 /*.iws
+/rt.jar
 .DS_Store
-jdk1.8.0_181.zip
+/jdk1.8.0_181.zip
