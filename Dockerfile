@@ -3,7 +3,7 @@ FROM ubuntu:18.10
 MAINTAINER Carlos Ballesteros Velasco <soywiz@gmail.com>
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y openjdk-11-jdk unzip wget curl nano libtinfo-dev libtinfo5 wine wine32 wine64
+RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y openjdk-8-jdk unzip wget curl nano libtinfo-dev libtinfo5 wine wine32 wine64
 RUN apt-get install zip
 
 ENV USER_HOME_LINUX=/home/user
@@ -26,10 +26,10 @@ RUN mkdir -p $USER_HOME_LINUX/.wine/drive_c/dev/ && \
 	mv java-1.8.0-openjdk-1.8.0.191-1.b12.ojdkbuild.windows.x86_64 java && \
 	rm java/src.zip
 
-# Patches openjdk8 RT java.nio.file.Files to circumvent the bug. Check java/nio/file/README.md for details.
+# Patches openjdk8 RT java.nio.file.Files to circumvent the docker+wine+java bug/problem. Check java/nio/file/README.md for details.
 ENV JAVA_HOME_WIN=$USER_HOME_LINUX/.wine/drive_c/dev/java
-ADD --chown=user java/nio/file/Files.class $JAVA_HOME_WIN/jre/lib/java/nio/file/Files.class
-RUN cd $JAVA_HOME_WIN/jre/lib && jar uf rt.jar java/nio/file/Files.class
+ADD --chown=user java/nio/file/Files.java $JAVA_HOME_WIN/jre/lib/java/nio/file/Files.java
+RUN cd $JAVA_HOME_WIN/jre/lib && javac -XDignore.symbol.file java/nio/file/Files.java && jar uf rt.jar java
 
 # Set JAVA_HOME and PATH environment variables with gradle and jav, and wait wineserver for 5 seconds to flush files
 RUN cd $USER_HOME_LINUX && \
