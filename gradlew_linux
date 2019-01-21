@@ -6,4 +6,4 @@ HOME=`echo ~` docker run --rm -it \
 	-v "gradlew_gradle_linux:/home/user/.gradle:delegated" \
 	-v "gradlew_konan_linux:/home/user/.konan:delegated" \
 	soywiz/kotlin-native-win:java8 \
-	/bin/bash -c "cp -f /home/user/.gradle-host/gradle.properties /home/user/.gradle/gradle.properties && ./gradlew --no-daemon $*"
+	/bin/bash -c "cp -f /home/user/.gradle-host/gradle.properties /home/user/.gradle/gradle.properties 2> /dev/null; ./gradlew --no-daemon $*"
