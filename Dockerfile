@@ -12,9 +12,11 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Download all the required dependencies as root and create "user"
 RUN dpkg --add-architecture i386 && \
 	apt-get update && \
-	apt-get install -y openjdk-8-jdk unzip wget curl nano libtinfo-dev libtinfo5 wine wine32 wine64 zip && \
+	apt-get install -y --no-install-recommends openjdk-8-jdk-headless unzip wget curl nano libtinfo-dev libtinfo5 wine wine32 wine64 zip && \
 	chmod 0777 -R /usr/local/bin && \
-	useradd -ms /bin/bash user
+	useradd -ms /bin/bash user && \
+	apt-get clean && \
+	rm -rf /var/lib/apt/lists/*
 
 # Switch from root to user
 USER user
