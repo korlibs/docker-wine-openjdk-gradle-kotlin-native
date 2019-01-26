@@ -12,9 +12,11 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Download all the required dependencies as root and create "user"
 RUN dpkg --add-architecture i386 && \
 	apt-get update && \
-	apt-get install -y --no-install-recommends openjdk-8-jdk-headless unzip wget curl nano libtinfo-dev libtinfo5 wine wine32 wine64 zip && \
+	apt-get install -y --no-install-recommends openjdk-8-jdk-headless unzip wget curl nano libtinfo-dev libtinfo5 wine wine32 wine64 zip sudo && \
 	chmod 0777 -R /usr/local/bin && \
-	useradd -ms /bin/bash user && \
+	adduser --disabled-password --gecos '' user && \
+	adduser user sudo && \
+	echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
 
