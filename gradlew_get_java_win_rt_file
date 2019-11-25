@@ -9,6 +9,6 @@ docker run --rm -it \
 	-v "gradlew_gradle_win:$DOCKER_USER_HOME/.gradle" \
 	-v "gradlew_konan_win:$DOCKER_USER_HOME/.konan" \
 	-v "gradlew_m2:$DOCKER_USER_HOME/.m2" \
-	soywiz/kotlin-native-win:java8 \
+	soywiz/kotlin-native-win:opengl-openal \
 	cp $JAVA_HOME_WIN/jre/lib/rt.jar /work/rt.jar
 	#cp $JAVA_HOME_WIN/jre/lib/ext/zipfs.jar /work/zipfs.jar
