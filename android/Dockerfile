@@ -10,4 +10,6 @@ ENV PATH="/home/user/android-sdk/tools/bin/:${PATH}"
 RUN sdkmanager --update
 RUN yes | sdkmanager --licenses
 RUN sdkmanager "platform-tools" "platforms;android-28"
+ENV ANDROID_HOME="/home/user/android-sdk"
+ENV PATH="/home/user/android-sdk/platform-tools/bin/:${PATH}"
 #RUN sdkmanager --list
