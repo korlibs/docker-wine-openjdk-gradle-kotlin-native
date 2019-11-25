@@ -7,9 +7,10 @@ RUN cd ~ && wget https://dl.google.com/android/repository/sdk-tools-linux-433379
 RUN mkdir -p ~/.android/
 RUN touch ~/.android/repositories.cfg
 ENV PATH="/home/user/android-sdk/tools/bin/:${PATH}"
+ENV PATH="/home/user/android-sdk/platform-tools/bin/:${PATH}"
+ENV ANDROID_HOME="/home/user/android-sdk"
 RUN sdkmanager --update
 RUN yes | sdkmanager --licenses
-RUN sdkmanager "platform-tools" "platforms;android-28"
-ENV ANDROID_HOME="/home/user/android-sdk"
-ENV PATH="/home/user/android-sdk/platform-tools/bin/:${PATH}"
-#RUN sdkmanager --list
+RUN sdkmanager "platform-tools"
+RUN sdkmanager "platforms;android-28"
+RUN sdkmanager "build-tools;28.0.3"
