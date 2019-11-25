@@ -5,6 +5,8 @@ to compile windows and linux libraries and executables of Kotlin/Native projects
 
 This docker is built automatically here: <https://hub.docker.com/r/soywiz/kotlin-native-win/>
 
+Repo of the project: <https://github.com/soywiz/docker-wine-openjdk-gradle-kotlin-native>
+
 ## Build and run HelloWorld
 
 ```bash
